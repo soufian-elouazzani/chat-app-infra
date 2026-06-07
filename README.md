@@ -28,7 +28,7 @@ Infrastructure for deploying the multi-repo AI chat application on **Grid'5000**
 
 ## Docker images
 
-Push these images to Docker Hub before deploying (`soufian1`):
+ake sure these images in Docker Hub before deploying (`soufian1`):
 
 | Image | Source repo |
 |-------|-------------|
