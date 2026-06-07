@@ -1,0 +1,17 @@
+---
+# GPU node preparation only (NVIDIA toolkit + device plugin).
+- name: Install NVIDIA container toolkit on GPU nodes
+  hosts: gpu_workers
+  gather_facts: true
+  become: true
+  roles:
+    - role: nvidia_toolkit
+      when: install_nvidia_toolkit | bool
+
+- name: Install NVIDIA device plugin in Kubernetes
+  hosts: k8s_controlplane
+  gather_facts: false
+  become: false
+  roles:
+    - role: nvidia_device_plugin
+      when: install_nvidia_device_plugin | bool

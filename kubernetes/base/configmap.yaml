@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: chat-app-config
+  namespace: chat-app
+data:
+  POSTGRES_USER: chat
+  POSTGRES_DB: chat_app
+  JWT_ALGORITHM: HS256
+  ACCESS_TOKEN_EXPIRE_MINUTES: "60"
+  CORS_ORIGINS: "*"
+  ENABLE_DEMO_WORKER: "false"
+  LOG_LEVEL: INFO
+  OLLAMA_KEEP_ALIVE: "1h"
+  VITE_API_URL: "/api"

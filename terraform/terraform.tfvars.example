@@ -1,0 +1,19 @@
+# Copy to terraform.tfvars and adjust before apply.
+# Run terraform from a Grid'5000 frontend with your account.
+
+site         = "lille"
+nodes_count  = 4
+walltime     = "4"
+oar_job_name = "chat-app-k8s"
+
+# CPU-only cluster (default access, good for dev / integration tests)
+nodes_selector = "{cluster = 'chiclet'}"
+
+# GPU cluster for Ollama inference (requires chifflot access on Lille)
+# nodes_selector = "{cluster = 'chifflot'}"
+
+# Mix control-plane on chiclet + workers on chifflot (advanced):
+# nodes_selector = "{cluster IN ('chiclet', 'chifflot')}"
+
+kubernetes_version = "v1.22.4-rancher1-1"
+ssh_key_path       = "~/.ssh/id_rsa"

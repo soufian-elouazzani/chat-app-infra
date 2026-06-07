@@ -1,0 +1,58 @@
+---
+- name: Check for NVIDIA GPU
+  ansible.builtin.command: lspci
+  register: lspci_out
+  changed_when: false
+  failed_when: false
+
+- name: Skip NVIDIA setup on nodes without GPU
+  ansible.builtin.meta: end_host
+  when: "'NVIDIA' not in lspci_out.stdout and '10de:' not in lspci_out.stdout"
+
+- name: Install NVIDIA driver headers and build deps
+  ansible.builtin.apt:
+    name:
+      - linux-headers-{{ ansible_kernel }}
+      - build-essential
+      - dkms
+      - curl
+      - gnupg
+    state: present
+
+- name: Add NVIDIA CUDA keyring
+  ansible.builtin.get_url:
+    url: https://developer.download.nvidia.com/compute/cuda/repos/debian12/x86_64/cuda-keyring_1.1-1_all.deb
+    dest: /tmp/cuda-keyring.deb
+    mode: "0644"
+
+- name: Install CUDA keyring package
+  ansible.builtin.apt:
+    deb: /tmp/cuda-keyring.deb
+
+- name: Install NVIDIA container toolkit
+  ansible.builtin.apt:
+    name:
+      - nvidia-container-toolkit
+    state: present
+    update_cache: true
+
+- name: Configure containerd for NVIDIA runtime
+  ansible.builtin.command: nvidia-ctk runtime configure --runtime=containerd
+  register: nvidia_ctk
+  changed_when: "'already' not in nvidia_ctk.stdout | default('')"
+  failed_when: nvidia_ctk.rc not in [0]
+
+- name: Restart containerd
+  ansible.builtin.systemd:
+    name: containerd
+    state: restarted
+    enabled: true
+
+- name: Label GPU node for Ollama scheduling
+  ansible.builtin.command: >
+    kubectl --kubeconfig {{ kubeconfig_path }}
+    label node {{ inventory_hostname }} accelerator=nvidia-gpu --overwrite
+  delegate_to: localhost
+  become: false
+  changed_when: true
+  when: kubeconfig_path is defined

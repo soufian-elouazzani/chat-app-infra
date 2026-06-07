@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: gateway
+  namespace: chat-app
+spec:
+  template:
+    spec:
+      containers:
+        - name: gateway
+          image: soufian1/chat-app-gateway:latest
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: worker
+  namespace: chat-app
+spec:
+  template:
+    spec:
+      containers:
+        - name: worker
+          image: soufian1/chat-app-worker:latest
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: frontend
+  namespace: chat-app
+spec:
+  template:
+    spec:
+      containers:
+        - name: frontend
+          image: soufian1/chat-app-frontend:latest

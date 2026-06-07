@@ -1,0 +1,25 @@
+# Copy to inventory/hosts.yml and fill in node hostnames from:
+#   terraform output assigned_nodes
+#
+# Example:
+# all:
+#   children:
+#     k8s_controlplane:
+#       hosts:
+#         chetemi-1.lille.grid5000.fr:
+#     k8s_workers:
+#       hosts:
+#         chetemi-5.lille.grid5000.fr:
+#         chifflet-3.lille.grid5000.fr:
+#     gpu_workers:
+#       hosts:
+#         chifflot-1.lille.grid5000.fr:
+
+all:
+  children:
+    k8s_controlplane:
+      hosts: {}
+    k8s_workers:
+      hosts: {}
+    gpu_workers:
+      hosts: {}

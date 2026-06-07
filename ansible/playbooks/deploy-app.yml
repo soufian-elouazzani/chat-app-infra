@@ -1,0 +1,8 @@
+---
+# Deploy or update Kubernetes manifests only (cluster must already exist).
+- name: Deploy chat app to Kubernetes
+  hosts: k8s_controlplane
+  gather_facts: false
+  become: false
+  roles:
+    - role: k8s_app

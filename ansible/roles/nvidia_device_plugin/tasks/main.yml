@@ -1,0 +1,29 @@
+---
+- name: Ensure kubeconfig exists
+  ansible.builtin.stat:
+    path: "{{ kubeconfig_path }}"
+  register: kubeconfig_stat
+  delegate_to: localhost
+  become: false
+
+- name: Fail if kubeconfig is missing
+  ansible.builtin.fail:
+    msg: "Run terraform apply first. Expected kubeconfig at {{ kubeconfig_path }}"
+  when: not kubeconfig_stat.stat.exists
+
+- name: Apply NVIDIA device plugin manifest
+  ansible.builtin.command: >
+    kubectl --kubeconfig {{ kubeconfig_path }} apply -f
+    https://raw.githubusercontent.com/NVIDIA/k8s-device-plugin/{{ nvidia_device_plugin_version }}/nvidia-device-plugin.yml
+  delegate_to: localhost
+  become: false
+  register: device_plugin_apply
+  changed_when: "'unchanged' not in device_plugin_apply.stdout"
+
+- name: Wait for device plugin pods
+  ansible.builtin.command: >
+    kubectl --kubeconfig {{ kubeconfig_path }} -n kube-system
+    rollout status daemonset/nvidia-device-plugin-daemonset --timeout=300s
+  delegate_to: localhost
+  become: false
+  changed_when: false

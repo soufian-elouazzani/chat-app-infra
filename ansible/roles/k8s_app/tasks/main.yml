@@ -1,0 +1,74 @@
+---
+- name: Ensure kubeconfig exists
+  ansible.builtin.stat:
+    path: "{{ kubeconfig_path }}"
+  register: kubeconfig_stat
+  delegate_to: localhost
+  become: false
+
+- name: Fail if kubeconfig is missing
+  ansible.builtin.fail:
+    msg: "Run terraform apply first. Expected kubeconfig at {{ kubeconfig_path }}"
+  when: not kubeconfig_stat.stat.exists
+
+- name: Apply Kubernetes manifests with kustomize
+  ansible.builtin.command: >
+    kubectl --kubeconfig {{ kubeconfig_path }} apply -k
+    {{ playbook_dir }}/../../kubernetes/overlays/{{ k8s_overlay }}
+  delegate_to: localhost
+  become: false
+  register: k8s_apply
+  changed_when: "'unchanged' not in k8s_apply.stdout"
+
+- name: Wait for core platform services
+  ansible.builtin.command: >
+    kubectl --kubeconfig {{ kubeconfig_path }} -n chat-app
+    rollout status deployment/{{ item }} --timeout=600s
+  delegate_to: localhost
+  become: false
+  loop:
+    - redis
+    - rabbitmq
+    - gateway
+    - worker
+    - frontend
+  changed_when: false
+
+- name: Wait for PostgreSQL
+  ansible.builtin.command: >
+    kubectl --kubeconfig {{ kubeconfig_path }} -n chat-app
+    rollout status statefulset/postgres --timeout=600s
+  delegate_to: localhost
+  become: false
+  changed_when: false
+
+- name: Wait for Ollama
+  ansible.builtin.command: >
+    kubectl --kubeconfig {{ kubeconfig_path }} -n chat-app
+    rollout status deployment/ollama --timeout=900s
+  delegate_to: localhost
+  become: false
+  changed_when: false
+
+- name: Pull Ollama model (optional)
+  ansible.builtin.command: >
+    kubectl --kubeconfig {{ kubeconfig_path }} -n chat-app exec deploy/ollama --
+    ollama pull {{ ollama_model }}
+  delegate_to: localhost
+  become: false
+  when: ollama_model | length > 0
+  register: ollama_pull
+  changed_when: "'success' in (ollama_pull.stdout | default('')) or ollama_pull.rc == 0"
+  failed_when: false
+
+- name: Show ingress endpoints
+  ansible.builtin.command: >
+    kubectl --kubeconfig {{ kubeconfig_path }} -n chat-app get ingress,svc
+  delegate_to: localhost
+  become: false
+  changed_when: false
+  register: ingress_info
+
+- name: Print access info
+  ansible.builtin.debug:
+    msg: "{{ ingress_info.stdout_lines }}"

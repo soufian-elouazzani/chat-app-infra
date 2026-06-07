@@ -1,0 +1,32 @@
+---
+# Full site setup: GPU drivers/toolkit on nodes, device plugin, then deploy the app.
+- name: Chat app Grid'5000 site setup
+  hosts: all
+  gather_facts: true
+  become: true
+
+  pre_tasks:
+    - name: Ensure apt cache is up to date
+      ansible.builtin.apt:
+        update_cache: true
+        cache_valid_time: 3600
+      when: ansible_os_family == "Debian"
+
+  roles:
+    - role: nvidia_toolkit
+      when: install_nvidia_toolkit | bool
+
+- name: Install NVIDIA device plugin in Kubernetes
+  hosts: k8s_controlplane
+  gather_facts: false
+  become: false
+  roles:
+    - role: nvidia_device_plugin
+      when: install_nvidia_device_plugin | bool
+
+- name: Deploy chat application manifests
+  hosts: k8s_controlplane
+  gather_facts: false
+  become: false
+  roles:
+    - role: k8s_app
