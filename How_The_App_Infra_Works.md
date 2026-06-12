@@ -58,7 +58,7 @@ kubernetes/
 └── overlays/
     ├── grid5000/            # GPU overlay (Ollama gets GPU + nodeSelector)
     └── grid5000-cpu/        # Same stack, no GPU patch
-
+```
 
 after the creation of the cluster we gonna something like this :
 
