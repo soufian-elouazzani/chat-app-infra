@@ -60,3 +60,6 @@ kubernetes/
     └── grid5000-cpu/        # Same stack, no GPU patch
 
 
+after the creation of the cluster we gonna something like this :
+
+![Kubernetes Architecture](./docs/images/AIChatAppArchitecture.png)
