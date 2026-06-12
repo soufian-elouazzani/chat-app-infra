@@ -40,6 +40,7 @@ we have a script deploy.sh that runs all these steps.
 after the setup from Terraform and Ansible the most important step is the Manifest of the kubernetes. so that what we gonna be focusing on in this layer more.
 
 here is the layout of the repo in kubernetes:
+```text
 kubernetes/
 ├── base/                    # Full app stack (environment-agnostic)
 │   ├── kustomization.yaml   # Lists every resource + common labels
@@ -59,17 +60,3 @@ kubernetes/
     └── grid5000-cpu/        # Same stack, no GPU patch
 
 
-```mermaid
-mindmap
-  root((kubernetes))
-    base[base: Environment Agnostic Stack]
-      kustomization_yaml[kustomization.yaml]
-      namespace_yaml[namespace.yaml]
-      configs[configmap & secrets]
-      databases[postgres / redis / rabbitmq]
-      ai_engine[ollama: PVC + Deployment]
-      apps[gateway / worker / frontend]
-      routing[ingress: Nginx + NodePort]
-    overlays[overlays: Target Environments]
-      grid5000[grid5000: GPU + NodeSelector patches]
-      grid5000_cpu[grid5000-cpu: Standard CPU-only fallback]
