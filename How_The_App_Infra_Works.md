@@ -207,7 +207,7 @@ flowchart TB
     WK --> RD
 ```
 
-![Terraform & Ansible Architecture](./docs/images/AIChatAppTerraform.png.png)
+![Terraform & Ansible Architecture](./docs/images/AIChatAppTerraform.png)
 
 Repository map (everything with it roles)
 ```text
