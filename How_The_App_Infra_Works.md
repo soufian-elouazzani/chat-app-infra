@@ -34,6 +34,7 @@ flowchart TB
     KC --> NV
     KA --> APP
 
+```
 we have a script deploy.sh that runs all these steps.
 
 after the setup from Terraform and Ansible the most important step is the Manifest of the kubernetes. so that what we gonna be focusing on in this layer more.
