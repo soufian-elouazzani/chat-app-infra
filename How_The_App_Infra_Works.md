@@ -9,7 +9,9 @@ Layer 3- the third abstraction layer is to apply the kubenetes manifest for the 
 
 additionaly to these layers we should add the monitoring in our case promethous/grafana which give us insights on our app the the runtime
 
+```mermaid
 flowchart TB
+    %% Layer Definitions
     subgraph layer1 [Layer 1 — Terraform]
         OAR[Grid'5000 OAR reservation]
         RKE[RKE Kubernetes cluster]
@@ -30,8 +32,14 @@ flowchart TB
         NS --> APP
     end
 
-    KC --> NV
-    KA --> APP
+    %% Cross-Layer Connections
+    KC ==> NV
+    KA ==> APP
+
+    %% Custom Color Theme Elements
+    style layer1 fill:#e1f5fe,stroke:#03a9f4,stroke-width:2px;
+    style layer2 fill:#e0f2f1,stroke:#009688,stroke-width:2px;
+    style layer3 fill:#f3e5f5,stroke:#9c27b0,stroke-width:2px;
 
 we have a script deploy.sh that runs all these steps.
 
@@ -55,4 +63,6 @@ kubernetes/
 └── overlays/
     ├── grid5000/            # GPU overlay (Ollama gets GPU + nodeSelector)
     └── grid5000-cpu/        # Same stack, no GPU patch
+
+
 
