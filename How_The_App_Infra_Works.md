@@ -239,3 +239,12 @@ chat-app-infra/
 └── README.md               Operator documentation
 
 ```
+
+
+
+Monitoring :
+in the monitoring part we gonna use Prometheus and grafana plus DataDog, 
+one of the key metrics that we can collect are :
+    - Desk, RAM, CPU/GPU usage
+    - amount of waiting SQL requests
+    - number of threads executing a task
