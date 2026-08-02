@@ -251,4 +251,4 @@ one of the key metrics that we can collect are :
 
 
 01/08/2026: Test added, with monitoring on kubernetes
-02/08/2026: The App tested on Grid'5000 
+02/08/2026: The App tested on Grid'5000, the app working, still need helm implementation
