@@ -1,4 +1,21 @@
-The big picture of the application:
+# How the App Infrastructure Works
+
+> Companion deep dive to the [main README](./README.md).  
+> For application code and API details, use the sibling repositories below.
+
+## Related repositories
+
+| Repository | Role | Link |
+|------------|------|------|
+| **chat-app-frontend** | React chat UI | [github.com/soufian-elouazzani/chat-app-frontend](https://github.com/soufian-elouazzani/chat-app-frontend) |
+| **chat-app-gateway** | FastAPI API gateway | [github.com/soufian-elouazzani/chat-app-gateway](https://github.com/soufian-elouazzani/chat-app-gateway) |
+| **chat-app-worker** | Async worker + Ollama client | [github.com/soufian-elouazzani/chat-app-worker](https://github.com/soufian-elouazzani/chat-app-worker) |
+| **chat-app-infra** | Terraform / Ansible / Kubernetes (this repo) | [github.com/soufian-elouazzani/chat-app-infra](https://github.com/soufian-elouazzani/chat-app-infra) |
+
+---
+
+## The big picture
+
 to set up the deployement of an applciation on the cloud we should manly handle three major layers: 
 
 Layer 1- the operating system provisioning (in our case we gonna reserve Nodes on Grid'5000) , and setting up a kubernetes cluster with the master the wokrkers ready to accept our application configuration.
