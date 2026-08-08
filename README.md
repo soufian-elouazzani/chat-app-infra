@@ -244,13 +244,13 @@ All wired via ConfigMap + Secret in `kubernetes/base/`.
 
 ## Documentation map
 
-| Document | Audience | Content |
-|----------|----------|---------|
-| **This README** | Recruiters / operators | Project overview, related repos, quick deploy |
-| **[How_The_App_Infra_Works.md](./How_The_App_Infra_Works.md)** | Engineers | Layer-by-layer infra explanation (Terraform → Ansible → K8s) |
-| [Frontend README](https://github.com/soufian-elouazzani/chat-app-frontend#readme) | Frontend / full-stack | UI, features, message flow |
-| [Gateway README](https://github.com/soufian-elouazzani/chat-app-gateway#readme) | Backend | API, auth, async task contract |
-| [Worker README](https://github.com/soufian-elouazzani/chat-app-worker#readme) | Backend | Queue consumer, Ollama integration |
+| Document | Content |
+|----------|---------|
+| **This README** | Project overview, related repos, quick deploy |
+| **[How_The_App_Infra_Works.md](./How_The_App_Infra_Works.md)** | Layer-by-layer infra explanation (Terraform → Ansible → K8s) |
+| [Frontend README](https://github.com/soufian-elouazzani/chat-app-frontend#readme) | UI, features, message flow |
+| [Gateway README](https://github.com/soufian-elouazzani/chat-app-gateway#readme) | API, auth, async task contract |
+| [Worker README](https://github.com/soufian-elouazzani/chat-app-worker#readme) | Queue consumer, Ollama integration |
 
 ---
 
