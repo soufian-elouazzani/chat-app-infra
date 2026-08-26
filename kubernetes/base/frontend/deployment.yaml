@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
         - name: frontend
-          image: soufian1/chat-app-frontend:sha-5db1212df56168b3c0e193d02485110663044ddc
+          image: soufian1/chat-app-frontend:sha-12ab8305ef171e9f23b3b3954b2a7705242c3a77
           imagePullPolicy: Always
           ports:
             - containerPort: 80
