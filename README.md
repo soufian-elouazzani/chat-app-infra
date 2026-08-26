@@ -4,7 +4,9 @@ Infrastructure-as-code for a **multi-repo, ChatGPT-style AI chat platform** depl
 
 This repository is the **DevOps / platform** side of the project: provisioning, configuration management, GPU enablement, and Kubernetes manifests. The application itself lives in three sibling repositories.
 
-> **Deep dive:** [How_The_App_Infra_Works.md](./How_The_App_Infra_Works.md) — full walkthrough of Terraform, Ansible, Kubernetes, and how every layer connects.
+> **Deep dives:**  
+> - [How_Grid5000_Works.md](./How_Grid5000_Works.md) — Grid'5000, Lille clusters, SSH, OAR, and how to connect  
+> - [How_The_App_Infra_Works.md](./How_The_App_Infra_Works.md) — Terraform, Ansible, Kubernetes, and how every layer connects
 
 ---
 
@@ -77,6 +79,7 @@ kubernetes/
     grid5000-cpu/       Same stack without GPU requests
 scripts/deploy.sh       End-to-end deploy helper
 Makefile                Common targets
+How_Grid5000_Works.md        Grid'5000 guide (clusters, SSH, OAR)
 How_The_App_Infra_Works.md   Architecture deep dive
 ```
 
@@ -247,6 +250,7 @@ All wired via ConfigMap + Secret in `kubernetes/base/`.
 | Document | Content |
 |----------|---------|
 | **This README** | Project overview, related repos, quick deploy |
+| **[How_Grid5000_Works.md](./How_Grid5000_Works.md)** | Grid'5000 platform, Lille clusters, SSH/OAR, connection guide |
 | **[How_The_App_Infra_Works.md](./How_The_App_Infra_Works.md)** | Layer-by-layer infra explanation (Terraform → Ansible → K8s) |
 | [Frontend README](https://github.com/soufian-elouazzani/chat-app-frontend#readme) | UI, features, message flow |
 | [Gateway README](https://github.com/soufian-elouazzani/chat-app-gateway#readme) | API, auth, async task contract |

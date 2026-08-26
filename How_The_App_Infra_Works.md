@@ -1,6 +1,7 @@
 # How the App Infrastructure Works
 
 > Companion deep dive to the [main README](./README.md).  
+> For Grid'5000 connection, clusters, and OAR details, see [How_Grid5000_Works.md](./How_Grid5000_Works.md).  
 > For application code and API details, use the sibling repositories below.
 
 ## Related repositories
